@@ -9,7 +9,7 @@ Compile .so from <https://github.com/n0b0dyCN/RedisModules-ExecuteCommand>.
 
 Copy the .so file to same folder with `redis-rogue-server.py`.
 
-run with ngork
+run with ngrok 
 ```
 # Terminal 1 - Start ngrok on local port 21000
 ngrok tcp 21000
