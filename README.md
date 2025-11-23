@@ -2,6 +2,7 @@
 
 A exploit for Redis 4.x and 5.x RCE, inspired by [Redis post-exploitation](https://2018.zeronights.ru/wp-content/uploads/materials/15-redis-post-exploitation.pdf).
 
+## fork for using with tunneling
 ## Usage:
 
 Compile .so from <https://github.com/n0b0dyCN/RedisModules-ExecuteCommand>.
